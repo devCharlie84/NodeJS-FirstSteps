@@ -7,7 +7,8 @@ const app = express();
 
 function getName(req, res) {
   const name = req.params.name;
-  res.status(200).send(`Hola ${name}`);
+  res.status(200).send({ hello: name });
+  // res.json({ hello: name });
 }
 
 api.get("/hello/:name", getName);
