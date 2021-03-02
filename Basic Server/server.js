@@ -1,18 +1,28 @@
-//Servidor solamente de ejercicio de práctica
+//Ejercicio con http, sin express
 const http = require("http");
+const url = require("url");
 
-const server = http.createServer(onRequest);
+const port = 8000;
 
-function onRequest(req, res) {
+const server = http.createServer((req, res) => {
+  const requestUrl = url.parse(req.url);
+  const path = requestUrl.pathname;
+
+  const parts = path.split("/").slice(1);
+
+  // This is really brittle, but assuming you know it's going to be 2 parts remaining after the above..
+
+  res.statusCode = 200;
   res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.writeHead(200); //HTTP OK Status
+  const payload = {
+    hello: parts[1],
+  };
+  res.write(JSON.stringify(payload));
+  res.end();
+});
 
-  let name = "Carlos";
-  let data = JSON.stringify(name);
-  res.end(`Hola ${data}`);
-}
-
-server.listen(8000, function () {
-  console.log("Listening on port 8000");
+server.listen(port, () => {
+  console.log("#####################################");
+  console.log(`###### LISTENING ON PORT ${port} #######`);
+  console.log("#####################################");
 });
