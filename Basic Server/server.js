@@ -10,8 +10,6 @@ const server = http.createServer((req, res) => {
 
   const parts = path.split("/").slice(1);
 
-  // This is really brittle, but assuming you know it's going to be 2 parts remaining after the above..
-
   res.statusCode = 200;
   res.setHeader("Content-Type", "application/json");
   const payload = {
